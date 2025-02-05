@@ -5,7 +5,7 @@ Welcome to Aaron's opinionated way to build and run the JFrog CLI from source.
 ## Step 1: Project setup
 
 ```sh
-git clone "this repository URL" jf-cli-dev
+git clone "this repository URL" jfrog-cli-dev
 cd jf-cli-dev
 git submodule update --init --recursive
 ```
@@ -84,6 +84,6 @@ jf version 2.73.2-aaronc.0
 
 ## Bonus: Personal Forks for Upstream Contribution
 
-1. Fork this repository (perhaps as "jf-cli-dev" or similar), the jfrog/jfrog-cli, & jfrog/jfrog-cli-core to your GitHub account.
+1. Fork this repository (perhaps as `jfrog-cli-dev` or similar), the [jfrog/jfrog-cli](https://github.com/jfrog/jfrog-cli/), & [jfrog/jfrog-cli-core](https://github.com/jfrog/jfrog-cli-core/) to your GitHub account.
 2. Add a remote to your local repository and push everything to your fork.
 3. Update the submodules in this repository to point to your fork's remote.
