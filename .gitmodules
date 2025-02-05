@@ -1,0 +1,6 @@
+[submodule "jfrog-cli"]
+	path = jfrog-cli
+	url = git@github.com:acrois/jfrog-cli.git
+[submodule "jfrog-cli-core"]
+	path = jfrog-cli-core
+	url = git@github.com:acrois/jfrog-cli-core.git
