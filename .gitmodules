@@ -4,3 +4,15 @@
 [submodule "jfrog-cli-core"]
 	path = jfrog-cli-core
 	url = git@github.com:acrois/jfrog-cli-core.git
+[submodule "jfrog-cli-security"]
+	path = jfrog-cli-security
+	url = git@github.com:acrois/jfrog-cli-security.git
+[submodule "jfrog-cli-artifactory"]
+	path = jfrog-cli-artifactory
+	url = git@github.com:acrois/jfrog-cli-artifactory.git
+[submodule "jfrog-client-go"]
+	path = jfrog-client-go
+	url = git@github.com:acrois/jfrog-client-go.git
+[submodule "build-info-go"]
+	path = build-info-go
+	url = git@github.com:acrois/build-info-go.git
