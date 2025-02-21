@@ -6,7 +6,7 @@ Welcome to Aaron's opinionated way to build and run the JFrog CLI from source.
 
 ```sh
 git clone "this repository URL" jfrog-cli-dev
-cd jf-cli-dev
+cd jfrog-cli-dev
 git submodule update --init --recursive
 ```
 
@@ -20,7 +20,7 @@ open -a "Visual Studio Code" .
 
 If you have ever used vscode on Windows or Linux, you may have enjoyed being able to type `code .` in any folder to open it in vscode. Now it is here on MacOS:
 
-Add this to your `~/.zshrc`:
+Add this to your `~/.zsh_aliases`:
 ```sh
 alias code='open -a "Visual Studio Code" --'
 ```
@@ -86,4 +86,8 @@ jf version 2.73.2-aaronc.0
 
 1. Fork this repository (perhaps as `jfrog-cli-dev` or similar), the [jfrog/jfrog-cli](https://github.com/jfrog/jfrog-cli/), & [jfrog/jfrog-cli-core](https://github.com/jfrog/jfrog-cli-core/) to your GitHub account.
 2. Add a remote to your local repository and push everything to your fork.
-3. Update the submodules in this repository to point to your fork's remote.
+3. Update the [.gitmodules](.gitmodules) to point to your fork's remote and reinitialize.
+    ```sh
+    git clean -xfdf
+    git submodule update --init --recursive
+    ```
