@@ -1,4 +1,4 @@
-# PS Tech Demo: Build JFrog CLI from source
+# Tech Demo: Build Custom JFrog CLI (bonus: contributing back)
 
 Welcome to Aaron's opinionated way to build and run the JFrog CLI from source.
 
@@ -84,10 +84,34 @@ jf version 2.73.2-aaronc.0
 
 ## Bonus: Personal Forks for Upstream Contribution
 
-1. Fork this repository (perhaps as `jfrog-cli-dev` or similar), the [jfrog/jfrog-cli](https://github.com/jfrog/jfrog-cli/), & [jfrog/jfrog-cli-core](https://github.com/jfrog/jfrog-cli-core/) to your GitHub account.
-2. Add a remote to your local repository and push everything to your fork.
-3. Update the [.gitmodules](.gitmodules) to point to your fork's remote and reinitialize.
-    ```sh
-    git clean -xfdf
-    git submodule update --init --recursive
-    ```
+### 1. Fork this repository
+
+If you have the GH CLI and this repo cloned locally, simply:
+
+```sh
+gh repo fork
+```
+
+Otherwise, you can do it through [the GitHub UI](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
+
+### 2. Fork JFrog CLI Repositories
+
+#### A. GH CLI
+
+```sh
+git submodule foreach 'gh repo fork --clone=false --remote=true'
+```
+
+#### B. Manually
+
+- https://github.com/jfrog/build-info-go
+- https://github.com/jfrog/jfrog-cli
+- https://github.com/jfrog/jfrog-cli-artifactory
+- https://github.com/jfrog/jfrog-cli-core
+- https://github.com/jfrog/jfrog-cli-platform-services
+- https://github.com/jfrog/jfrog-cli-security
+- https://github.com/jfrog/jfrog-client-go
+
+Fork the above repos to your GitHub account.
+
+Then you can update the [.gitmodules](.gitmodules) and run `git submodule sync --recursive` or run `git submodule set-url` (see: [docs](https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-set-url--ltpathgtltnewurlgt))
