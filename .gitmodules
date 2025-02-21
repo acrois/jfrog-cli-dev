@@ -16,3 +16,6 @@
 [submodule "build-info-go"]
 	path = build-info-go
 	url = git@github.com:acrois/build-info-go.git
+[submodule "jfrog-cli-platform-services"]
+	path = jfrog-cli-platform-services
+	url = git@github.com:acrois/jfrog-cli-platform-services.git
