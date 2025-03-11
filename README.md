@@ -33,6 +33,7 @@ code .
 
 ## Step 3: Build the CLI
 
+### Option 3a: Use the build.sh
 Make any changes you like to the code. The [jfrog-cli](./jfrog-cli) depends on the [jfrog-cli-core](./jfrog-cli-core). This custom version already has the most basic changes you need to get started and begin at a version Aaron has confirmed will compile together.
 
 Then run the build command:
@@ -40,6 +41,14 @@ Then run the build command:
 ```sh
 cd ./jfrog-cli
 ./build/build.sh
+```
+
+### Option 3b: Use go install
+
+As long as you have included the `$GOPATH/bin` in your `$PATH` and it has higher precedence than the directory the normal `jf` executable gets installed in. However, like most things, [you can control this too](https://pkg.go.dev/cmd/go#hdr-GOPATH_environment_variable) if you need to.
+
+```sh
+go install
 ```
 
 ## Step 4: Create a local bin
