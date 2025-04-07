@@ -53,7 +53,7 @@ go install
 
 ## Step 4: Create a local bin
 
-Useful for aliasing (symlink) binaries or custom built executables.
+If you used option 3b, then you don't need to go further. Following along further is useful for creating a directory to store aliased (symlink) binaries or custom built executables.
 
 ```sh
 mkdir -p ~/.local/bin/
