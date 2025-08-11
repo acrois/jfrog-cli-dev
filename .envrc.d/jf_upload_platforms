@@ -1,0 +1,75 @@
+#!/bin/bash
+set -eu
+
+# Configuration
+REPO_NAME="${1:-}"
+
+BASE_DIR="$(dirname "$(readlink -f "$0")")"
+PROJECT_DIR="$(dirname "$BASE_DIR")/jfrog-cli"
+# Get the current version from the Go constants file
+VERSION=$(grep '^[[:space:]]*CliVersion[[:space:]]*=' "$PROJECT_DIR/utils/cliutils/cli_consts.go" | cut -d'"' -f2)
+VERSION_DIR="$(dirname "$BASE_DIR")/bin/$VERSION"
+
+if [ -z "$REPO_NAME" ]; then
+    echo "Usage: $0 <repository-name>"
+    echo "Example: $0 jfrog-cli-releases"
+    exit 1
+fi
+
+if [ ! -d "$VERSION_DIR" ]; then
+    echo "Error: Version directory '$VERSION_DIR' not found. Please run build-all-platforms.sh first."
+    exit 1
+fi
+
+echo "Uploading JFrog CLI to repository: $REPO_NAME"
+echo "Version directory: $VERSION_DIR"
+
+# Step 1: Upload v2-jf version (with jf executables)
+echo ""
+echo "Step 1: Uploading v2-jf version..."
+cd "$VERSION_DIR"
+jf rt u "*" "$REPO_NAME/v2-jf/$VERSION/" --recursive --flat=false
+cd - > /dev/null
+
+# Step 2: Create v2 version with jfrog executables
+echo ""
+echo "Step 2: Creating v2 version with jfrog executables..."
+
+# Create temporary directory for v2 version
+TEMP_V2_DIR="build/temp-v2-$(date +%s)"
+mkdir -p "$TEMP_V2_DIR"
+
+# Copy the structure and rename executables
+for platform_dir in "$VERSION_DIR"/*; do
+    if [ -d "$platform_dir" ]; then
+        platform_name=$(basename "$platform_dir")
+        new_platform_name="${platform_name/jfrog-cli-/jfrog-cli-}"
+        
+        # Create the new platform directory
+        mkdir -p "$TEMP_V2_DIR/$new_platform_name"
+        
+        # Copy and rename the executable
+        if [ -f "$platform_dir/jf" ]; then
+            cp "$platform_dir/jf" "$TEMP_V2_DIR/$new_platform_name/jfrog"
+        elif [ -f "$platform_dir/jf.exe" ]; then
+            cp "$platform_dir/jf.exe" "$TEMP_V2_DIR/$new_platform_name/jfrog.exe"
+        fi
+    fi
+done
+
+# Step 3: Upload v2 version
+echo ""
+echo "Step 3: Uploading v2 version..."
+cd "$TEMP_V2_DIR"
+jf rt u "*" "$REPO_NAME/v2/$VERSION/" --recursive --flat=false
+cd - > /dev/null
+
+# Cleanup
+echo ""
+echo "Cleaning up temporary files..."
+rm -rf "$TEMP_V2_DIR"
+
+echo ""
+echo "Upload completed successfully!"
+echo "v2-jf version uploaded to: $REPO_NAME/v2-jf/$VERSION/"
+echo "v2 version uploaded to: $REPO_NAME/v2/$VERSION/" 

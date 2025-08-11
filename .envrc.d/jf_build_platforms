@@ -1,0 +1,66 @@
+#!/bin/bash
+set -eu
+
+BASE_DIR="$(dirname "$(readlink -f "$0")")"
+PROJECT_DIR="$(dirname "$BASE_DIR")/jfrog-cli"
+# Get the current version from the Go constants file
+VERSION=$(grep '^[[:space:]]*CliVersion[[:space:]]*=' "$PROJECT_DIR/utils/cliutils/cli_consts.go" | cut -d'"' -f2)
+echo "Building JFrog CLI version: $VERSION"
+
+# Create the version directory
+VERSION_DIR="$(dirname "$BASE_DIR")/bin/$VERSION"
+mkdir -p "$VERSION_DIR"
+
+# Define platforms and their corresponding GOOS and GOARCH values
+PLATFORMS=(
+    "linux-386:linux:386"
+    "linux-amd64:linux:amd64"
+    "linux-arm:linux:arm"
+    "linux-arm64:linux:arm64"
+    "linux-ppc64:linux:ppc64"
+    "linux-ppc64le:linux:ppc64le"
+    "linux-s390x:linux:s390x"
+    "mac-arm64:darwin:arm64"
+    "windows-amd64:windows:amd64"
+)
+
+# Build for each platform
+for platform_info in "${PLATFORMS[@]}"; do
+    IFS=':' read -r platform GOOS GOARCH <<< "$platform_info"
+    
+    echo "Building for $platform (GOOS=$GOOS, GOARCH=$GOARCH)..."
+    
+    # Determine executable name and directory
+    if [[ "$platform" == windows* ]]; then
+        EXE_NAME="jf.exe"
+        PLATFORM_DIR="jfrog-cli-windows-amd64"
+    elif [[ "$platform" == mac* ]]; then
+        EXE_NAME="jf"
+        PLATFORM_DIR="jfrog-cli-mac-${platform#mac-}"
+    else
+        EXE_NAME="jf"
+        PLATFORM_DIR="jfrog-cli-linux-${platform#linux-}"
+    fi
+    
+    # Create platform directory
+    mkdir -p "$VERSION_DIR/$PLATFORM_DIR"
+    
+    # Build the executable
+    if CGO_ENABLED=0 GOOS="$GOOS" GOARCH="$GOARCH" go build \
+        -C "$PROJECT_DIR" \
+        -o "$VERSION_DIR/$PLATFORM_DIR/$EXE_NAME" \
+        -ldflags '-w -extldflags "-static"' \
+        main.go; then
+        echo "✓ Built $EXE_NAME for $platform"
+    else
+        echo "✗ Skipped $platform (unsupported GOOS/GOARCH combination)"
+        # Remove the empty directory if build failed
+        rmdir "$VERSION_DIR/$PLATFORM_DIR" 2>/dev/null || true
+    fi
+done
+
+echo ""
+echo "Build completed successfully!"
+echo "All executables are located in the '$VERSION_DIR' directory:"
+echo ""
+tree "$VERSION_DIR" 2>/dev/null || find "$VERSION_DIR" -type f -name "jf*" | sort 

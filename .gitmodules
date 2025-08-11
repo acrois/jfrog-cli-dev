@@ -22,3 +22,6 @@
 [submodule "archiver"]
 	path = archiver
 	url = git@github.com:jfrog/archiver.git
+[submodule "jfrog-cli-vm"]
+	path = jfrog-cli-vm
+	url = git@github.com:jfrog/jfrog-cli-vm.git
