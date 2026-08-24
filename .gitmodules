@@ -19,9 +19,12 @@
 [submodule "jfrog-cli-platform-services"]
 	path = jfrog-cli-platform-services
 	url = git@github.com:acrois/jfrog-cli-platform-services.git
-[submodule "archiver"]
-	path = archiver
-	url = git@github.com:jfrog/archiver.git
-[submodule "jfrog-cli-vm"]
-	path = jfrog-cli-vm
-	url = git@github.com:jfrog/jfrog-cli-vm.git
+[submodule "ps-jfrog/scripts"]
+	path = ps-jfrog/scripts
+	url = git@github.com:ps-jfrog/scripts-general-util.git
+[submodule "ps-jfrog/jfrog-cli-plugin-compare"]
+	path = ps-jfrog/jfrog-cli-plugin-compare
+	url = git@github.com:ps-jfrog/jfrog-cli-plugin-compare.git
+[submodule "ps-jfrog/ps-jfrog-workflows"]
+	path = ps-jfrog/ps-jfrog-workflows
+	url = git@github.com:ps-jfrog/ps-jfrog-workflows.git
