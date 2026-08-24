@@ -19,3 +19,18 @@
 [submodule "jfrog-cli-platform-services"]
 	path = jfrog-cli-platform-services
 	url = git@github.com:jfrog/jfrog-cli-platform-services.git
+[submodule "archiver"]
+	path = archiver
+	url = git@github.com:jfrog/archiver.git
+[submodule "jfrog-cli-vm"]
+	path = jfrog-cli-vm
+	url = git@github.com:jfrog/jfrog-cli-vm.git
+[submodule "data-transfer"]
+	path = data-transfer
+	url = git@github.com:jfrog/data-transfer.git
+[submodule "jfrog-cli-application"]
+	path = jfrog-cli-application
+	url = git@github.com:jfrog/jfrog-cli-application.git
+[submodule "jfrog-cli-evidence"]
+	path = jfrog-cli-evidence
+	url = git@github.com:jfrog/jfrog-cli-evidence.git
